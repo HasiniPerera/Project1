@@ -1,3 +1,5 @@
+//simple xy chart
+
 #include <vtkChartXY.h>
 #include <vtkContextScene.h>
 #include <vtkContextView.h>
@@ -18,9 +20,7 @@
 #include<vtkAutoInit.h>
 
 VTK_MODULE_INIT(vtkRenderingContextOpenGL2)
-//#include <locale>
-//#include <string.h>
-//#include <atlconv.h>
+
 
 
 
@@ -56,15 +56,14 @@ int main(int, char*[])
 		table->SetValue(i, 2, sin(i * inc));
 	}
 
-	std::string fileOut =  "C:\\Users\\Upeka\\source\\repos\\Project5\\my.txt";
+	std::string fileOut =  "C:\\Users\\Upeka\\source\\repos\\Project1\\my.csv";
 
 	vtkSmartPointer<vtkDelimitedTextWriter> writer =vtkSmartPointer<vtkDelimitedTextWriter>::New();
 	writer->SetFileName(fileOut.c_str());
 	writer->SetInputData(table);
 	writer->Write();
 
-
-	// Set up the view
+    // Set up the view
 	vtkNew<vtkContextView> view;
 	
 	view->GetRenderWindow()->SetWindowName("LinePlot");
@@ -89,23 +88,11 @@ int main(int, char*[])
 	chart->GetTitleProperties()->SetFontSize(27);
 	chart->GetTitleProperties()->SetColor(colors->GetColor3d("banana").GetData());
 
-
-
-	chart->SetShowLegend(true);
+    chart->SetShowLegend(true);
 	chart->GetLegend()->SetInline(false);
 	chart->GetLegend()->SetHorizontalAlignment(vtkChartLegend::RIGHT);
 	chart->GetLegend()->SetVerticalAlignment(vtkChartLegend::TOP);
-	// For dotted line, the line type can be from 2 to 5 for different dash/dot
-	// patterns (see enum in vtkPen containing DASH_LINE, value 2):
-	// #ifndef WIN32
-	//   line->GetPen()->SetLineType(vtkPen::DASH_LINE);
-	// #endif
-	// (ifdef-ed out on Windows because DASH_LINE does not work on Windows
-	//  machines with built-in Intel HD graphics card...)
-
-	// view->GetRenderWindow()->SetMultiSamples(0);
-
-	// Start interactor
+	
     view->GetRenderWindow();
 	view->GetInteractor()->Initialize();
 	view->GetInteractor()->Start();
